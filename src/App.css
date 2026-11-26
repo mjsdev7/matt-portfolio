@@ -93,7 +93,7 @@ h1, h2, h3, p, ol { margin: 0; padding: 0; }
   background-size: cover; background-position: center; background-repeat: no-repeat;
 }
 .meal-preview { background-image: url("/images/meal-navi.jpg"); }
-.camp-preview { background-image: url("/images/camp-navi.jpg"); background-color: #2c3a33; }
+.camp-preview { background-image: url("/images/camp-navi.jpg"); background-color: #2c3a33; aspect-ratio: 1438 / 800; }
 .project-row { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; margin-top: 1.5rem; align-items: start; }
 .project-type { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; color: var(--muted); }
 .project-title h3 { margin-top: 0.6rem; font-family: var(--sans); font-weight: 300; font-size: clamp(1.7rem, 3vw, 2.4rem); letter-spacing: -0.03em; }
