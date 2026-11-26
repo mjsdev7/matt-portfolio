@@ -1,0 +1,62 @@
+/* ---------- 1. Intro on load ---------- */
+@keyframes rise { from { transform: translateY(110%); } to { transform: none; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+.hero-title .line { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.hero-title .line-inner { display: block; animation: rise 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+.hero-title .line:nth-child(2) .line-inner { animation-delay: 0.14s; }
+.hero-location { animation: fadeUp 0.8s ease backwards; }
+.hero-content { animation: fadeUp 1s 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+.navbar { animation: fadeUp 0.8s 0.1s ease backwards; }
+
+/* ---------- 2. Interactive hero (mouse) ---------- */
+.hero-title .line:nth-child(2) {
+  transform: translateX(calc(var(--px, 0) * 18px));
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hero-image { position: relative; overflow: hidden; background-image: none; }
+.hero-image::before {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  background: url("/images/hero.jpg") center / cover no-repeat;
+  transform: translate(calc(var(--px, 0) * -28px), calc(var(--py, 0) * -18px)) scale(1.02);
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- 3. Scroll reveals ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---------- 4. Hover effects ---------- */
+.nav-links a, .footer a, .project-meta a, .contact-side a { position: relative; }
+.nav-links a::after, .project-meta a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.nav-links a:hover::after, .project-meta a:hover::after { transform: scaleX(1); }
+
+.hero-button { transition: background 0.3s ease, transform 0.3s ease; }
+.hero-button span, .project-title h3 a span { display: inline-block; transition: transform 0.3s ease; }
+.hero-button:hover { background: #8a412e; transform: translateY(-2px); }
+.hero-button:hover span, .project-title h3 a:hover span { transform: translate(4px, -4px); }
+
+.project-preview { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s ease; }
+.project-preview:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -24px rgba(36, 38, 34, 0.35); }
+
+.process-list h3, .process-number { transition: transform 0.35s ease, color 0.35s ease; }
+.process-list li:hover h3 { transform: translateX(8px); }
+
+.contact-side a:not(.contact-small) { transition: transform 0.3s ease; }
+.contact-side a:hover { transform: translateX(6px); }
+
+/* ---------- Respect "reduce motion" ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}

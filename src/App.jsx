@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import "./App.css";
+import "./animations.css";
 
 const projects = [
   {
@@ -49,6 +51,37 @@ const steps = [
 ];
 
 function App() {
+  // Scroll reveals: fade elements in the first time they enter the screen
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.12 },
+    );
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  // Interactive hero: track the mouse as -0.5 to 0.5 across the hero
+  const setPointer = (el, x, y) => {
+    el.style.setProperty("--px", x.toFixed(3));
+    el.style.setProperty("--py", y.toFixed(3));
+  };
+  const onHeroMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    setPointer(
+      e.currentTarget,
+      (e.clientX - r.left) / r.width - 0.5,
+      (e.clientY - r.top) / r.height - 0.5,
+    );
+  };
+  const onHeroLeave = (e) => setPointer(e.currentTarget, 0, 0);
+
   return (
     <main className="site-shell">
       <div className="portfolio">
@@ -74,15 +107,24 @@ function App() {
         </header>
 
         {/* HERO */}
-        <section className="hero" id="home">
+        <section
+          className="hero"
+          id="home"
+          onMouseMove={onHeroMove}
+          onMouseLeave={onHeroLeave}
+        >
           <div className="hero-location">
             <span className="location-dot"></span>
             JAPAN/AICHI · OPEN TO FULL-TIME ROLES & RELOCATION
           </div>
 
           <h1 className="hero-title">
-            Digital craft.
-            <em>Human instinct.</em>
+            <span className="line">
+              <span className="line-inner">Digital craft.</span>
+            </span>
+            <span className="line">
+              <em className="line-inner">Human instinct.</em>
+            </span>
           </h1>
 
           <div className="hero-content">
@@ -115,7 +157,7 @@ function App() {
 
         {/* SELECTED WORK */}
         <section className="work-section" id="work">
-          <div className="section-heading">
+          <div className="section-heading reveal">
             <div>
               <span className="section-label">01 / SELECTED WORK</span>
               <h2>Useful by design.</h2>
@@ -127,7 +169,7 @@ function App() {
 
           <div className="projects">
             {projects.map((p) => (
-              <article className="project" key={p.id}>
+              <article className="project reveal" key={p.id}>
                 {/* Swap the image: public/images/meal-navi.jpg and camp-navi.jpg */}
                 <a
                   href={p.href}
@@ -168,13 +210,13 @@ function App() {
 
         {/* ABOUT */}
         <section className="about-section" id="about">
-          <div className="about-photo">
+          <div className="about-photo reveal">
             {/* Swap the image: public/images/matt.jpg */}
             <div className="portrait" role="img" aria-label="Matt Swales"></div>
             <span className="portrait-caption">MATT SWALES / AICHI, JAPAN</span>
           </div>
 
-          <div className="about-text">
+          <div className="about-text reveal">
             <span className="section-label">02 / A LITTLE ABOUT ME</span>
             <h2>A designer’s eye. A developer’s mind.</h2>
             <p className="about-lead">
@@ -202,7 +244,7 @@ function App() {
 
         {/* PROCESS */}
         <section className="process-section" id="process">
-          <div className="process-intro">
+          <div className="process-intro reveal">
             <span className="section-label">03 / HOW I WORK</span>
             <h2>
               A clear process.
@@ -217,7 +259,11 @@ function App() {
 
           <ol className="process-list">
             {steps.map((s, i) => (
-              <li key={s.title}>
+              <li
+                key={s.title}
+                className="reveal"
+                style={{ transitionDelay: `${i * 90}ms` }}
+              >
                 <span className="process-number">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -230,7 +276,7 @@ function App() {
 
         {/* CONTACT */}
         <section className="contact-section" id="contact">
-          <div className="contact-content">
+          <div className="contact-content reveal">
             <div>
               <span className="section-label">04 / GET IN TOUCH</span>
               <h2>
