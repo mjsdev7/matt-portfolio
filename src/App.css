@@ -7,16 +7,20 @@
 
 .portfolio {
   max-width: 1440px;
+  min-height: calc(100vh - 40px);
   margin: 0 auto;
   padding: 0 5.7%;
   background: #f5f4ee;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* NAVIGATION */
 
 .navbar {
   height: 76px;
+  flex-shrink: 0;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -63,6 +67,9 @@
 /* HERO */
 
 .hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding-top: 57px;
 }
 
@@ -101,12 +108,13 @@
 }
 
 .hero-content {
+  flex: 1;
   display: grid;
   grid-template-columns: 0.75fr 1.5fr;
   gap: 8%;
   align-items: center;
   margin-top: 27px;
-  padding-bottom: 43px;
+  padding-bottom: 55px;
 }
 
 .hero-intro {
@@ -156,7 +164,7 @@
 .hero-visual {
   position: relative;
   width: 100%;
-  min-height: 215px;
+  height: clamp(215px, 24vh, 260px);
   overflow: hidden;
   background:
     radial-gradient(ellipse at 80% 90%, rgba(184, 112, 34, 0.7), transparent 35%),
@@ -188,7 +196,7 @@
 
 .visual-content {
   position: relative;
-  height: 215px;
+  height: 100%;
   padding: 27px 22px 12px;
 }
 
@@ -253,6 +261,7 @@
 
 .hero-bottom-line {
   height: 1px;
+  flex-shrink: 0;
   background: #e2dfd6;
 }
 
@@ -264,6 +273,7 @@
   }
 
   .portfolio {
+    min-height: 100vh;
     padding: 0 6%;
   }
 
@@ -296,6 +306,7 @@
     grid-template-columns: 1fr;
     gap: 28px;
     margin-top: 25px;
+    padding-bottom: 35px;
   }
 
   .hero-intro {
@@ -303,7 +314,7 @@
   }
 
   .hero-visual {
-    min-height: 200px;
+    height: 200px;
   }
 }
 
