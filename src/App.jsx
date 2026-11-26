@@ -54,10 +54,7 @@ function App() {
               </div>
             </div>
 
-            <div
-              className="hero-visual"
-              aria-label="Design measurement tool inspired visual"
-            >
+            <div className="hero-visual">
               <div className="ruler">
                 {Array.from({ length: 48 }, (_, i) => (
                   <span key={i}></span>
@@ -89,6 +86,121 @@ function App() {
           </div>
 
           <div className="hero-bottom-line"></div>
+        </section>
+
+        <section className="work-section" id="work">
+          <div className="work-heading">
+            <div>
+              <span className="section-label">01 / SELECTED WORK</span>
+              <h2>
+                Useful by <em>design.</em>
+              </h2>
+            </div>
+
+            <span className="work-count">
+              Two self-initiated concepts / 2026
+            </span>
+          </div>
+
+          <div className="projects">
+            <article className="project">
+              <a
+                href="https://github.com/mjsdev7/Meal-Navi"
+                target="_blank"
+                rel="noreferrer"
+                className="project-preview"
+              >
+                <img
+                  src="/meal-navi-preview.png"
+                  alt="Meal-Navi application preview"
+                />
+              </a>
+
+              <div className="project-details">
+                <div className="project-title">
+                  <span className="project-type">
+                    01 / MEAL PLANNING · RESPONSIVE WEB APP
+                  </span>
+                  <a
+                    href="https://github.com/mjsdev7/Meal-Navi"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Meal-Navi ↗
+                  </a>
+                </div>
+
+                <div className="project-description">
+                  <p>
+                    Less "what's for dinner?" More room for living.
+                    <br />
+                    Built with React, Node, Express and MongoDB, with JWT login
+                    and a recipe API.
+                  </p>
+
+                  <div className="project-meta">
+                    <span>UX/UI design · Full-stack development</span>
+                    <a
+                      href="https://github.com/mjsdev7/Meal-Navi"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View project ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article className="project">
+              <a
+                href="https://camp-navi.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="project-preview"
+              >
+                <img
+                  src="/camp-navi-preview.png"
+                  alt="Camp-Navi website preview"
+                />
+              </a>
+
+              <div className="project-details">
+                <div className="project-title">
+                  <span className="project-type">
+                    02 / CAMPING DISCOVERY · RESPONSIVE WEB APP
+                  </span>
+                  <a
+                    href="https://camp-navi.vercel.app/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Camp-Navi ↗
+                  </a>
+                </div>
+
+                <div className="project-description">
+                  <p>
+                    Less searching. More outside.
+                    <br />
+                    Built with Node, Express and MongoDB, with Passport login
+                    and image uploads.
+                  </p>
+
+                  <div className="project-meta">
+                    <span>UX/UI design · Full-stack development</span>
+                    <a
+                      href="https://camp-navi.vercel.app/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View project ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
         </section>
       </div>
     </main>
