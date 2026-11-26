@@ -1,0 +1,73 @@
+/* ---------- Projects: one full screen each, lines above and below ---------- */
+.projects { display: block; gap: 0; margin-top: 2.5rem; }
+
+.project-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1.7fr; /* text left, image right */
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--line);
+}
+
+/* Every second project flips: image left, text right */
+.project-screen.flip { grid-template-columns: 1.4fr 1fr; }
+.project-screen.flip .project-media { order: -1; }
+
+.project-media { width: 100%; }
+
+.project-text .project-title h3 { font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: 1; margin-top: 0.9rem; }
+.project-text .project-description { margin-top: 2rem; max-width: 26rem; }
+.project-text .project-description p { font-size: 0.95rem; }
+.project-text .project-meta {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+}
+
+@media (max-width: 860px) {
+  .project-screen, .project-screen.flip { grid-template-columns: 1fr; min-height: auto; padding-block: 3rem; }
+  .project-screen.flip .project-media { order: 0; }
+}
+
+/* ---------- Every section is a full screen ---------- */
+.work-section, .about-section, .process-section { padding-block: 0; }
+
+/* "Useful by design." becomes its own title screen */
+.work-section .section-heading {
+  min-height: 100vh;
+  min-height: 100svh;
+  align-items: flex-end;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+.work-section .section-heading h2 { font-size: clamp(3.5rem, 11vw, 10rem); margin-top: 1.25rem; }
+
+/* About and Process fill the screen with content centred */
+.about-section, .process-section {
+  min-height: 100vh;
+  min-height: 100svh;
+  align-items: center;
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+/* Contact: headline in the middle, footer bar pinned to the bottom */
+.contact-section { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+.contact-content { flex: 1; align-items: center; }
+.contact-section h2 { font-size: clamp(2.8rem, 6.4vw, 6.5rem); }
+.footer { margin-top: 2rem; }
+
+@media (max-width: 860px) {
+  .work-section .section-heading, .about-section, .process-section, .contact-section { min-height: auto; }
+  .work-section .section-heading { padding-block: 4rem 2rem; }
+  .about-section, .process-section { padding-block: 3rem; }
+}
+
+/* ---------- Footer / contact in the accent colour ---------- */
+.contact-section { background: var(--accent); }
+.contact-section .section-label { color: rgba(244, 242, 236, 0.85); }
+.contact-side p { color: #f4f2ec; }
+.footer { border-top-color: rgba(244, 242, 236, 0.4); }

@@ -1,0 +1,79 @@
+/* Full-screen hero: name + nav on top, huge headline, scroll cue bottom right */
+.hero-screen { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+
+.hero-screen .hero {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+/* Make the headline big. Change 12.6vw / 11.5rem to scale it up or down */
+.hero-title {
+  font-size: clamp(3.2rem, min(12.6vw, 11.5rem), 11.5rem);
+  line-height: 0.95;
+  margin-top: 1.5rem;
+}
+.hero-title .line:nth-child(2) .line-inner { font-size: 1.1em; }
+
+/* Scroll cue */
+.scroll-cue {
+  position: absolute;
+  right: 0;
+  bottom: clamp(1.5rem, 3vw, 2.5rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+.scroll-cue:hover { color: var(--ink); }
+.scroll-cue span { display: inline-block; font-size: 1rem; animation: nudge 2s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+/* Statement: the screen stays pinned while the words darken */
+.statement { margin-inline: var(--pad); height: 260vh; /* longer = stays pinned for longer */ }
+.statement-stick {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 3rem;
+}
+.statement-cta { opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.statement.done .statement-cta { opacity: 1; transform: none; }
+.statement-text {
+  max-width: 62rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 4.2vw, 3.6rem);
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  /* text-transform: uppercase;   <- remove the comment marks for all caps */
+}
+.statement-text .word { color: #cbc9c0; transition: color 0.5s ease; }
+.statement-text .word.lit { color: var(--ink); }
+
+/* Hover letters: each letter lifts and turns accent, then fades back slowly */
+.hero-title .line { padding-top: 0.16em; margin-top: -0.16em; } /* room so lifted letters aren't clipped */
+.hw { display: inline-block; white-space: nowrap; }
+.ch {
+  display: inline-block;
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), color 1.4s ease;
+}
+.ch:hover {
+  transform: translateY(-0.08em);
+  color: var(--accent);
+  transition-duration: 0.15s, 0.15s;
+}

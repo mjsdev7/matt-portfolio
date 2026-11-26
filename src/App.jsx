@@ -1,28 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
 import "./animations.css";
+import "./hero-fullscreen.css";
+import "./sections.css";
 
 const projects = [
   {
-    id: "meal",
-    label: "01 / MEAL PLANNING · RESPONSIVE WEB APP",
-    title: "Meal-Navi",
-    href: "https://github.com/mjsdev7/Meal-Navi",
-    aria: "View Meal-Navi on GitHub",
-    lines: [
-      "Less “what’s for dinner?” More room for living.",
-      "Built with React, Node, Express and MongoDB, with JWT login and a recipe API.",
-    ],
-  },
-  {
     id: "camp",
-    label: "02 / CAMPING DISCOVERY · RESPONSIVE WEB APP",
+    label: "01 / CAMPING DISCOVERY · RESPONSIVE WEB APP",
     title: "Camp-Navi",
     href: "https://camp-navi.vercel.app/",
     aria: "Visit Camp-Navi",
     lines: [
       "Less searching. More outside.",
       "Built with Node, Express and MongoDB, with Passport login and image uploads.",
+    ],
+  },
+  {
+    id: "meal",
+    label: "02 / MEAL PLANNING · RESPONSIVE WEB APP",
+    title: "Meal-Navi",
+    href: "https://github.com/mjsdev7/Meal-Navi",
+    aria: "View Meal-Navi on GitHub",
+    lines: [
+      "Less “what’s for dinner?” More room for living.",
+      "Built with React, Node, Express and MongoDB, with JWT login and a recipe API.",
     ],
   },
 ];
@@ -50,7 +52,62 @@ const steps = [
   },
 ];
 
+const statement =
+  "I’m Matt, a designer and full-stack developer from England, now living in Japan. I design and build websites and apps from start to finish, and I love making things that work as well as they look.";
+
+// Splits text into letters so each one can react to the mouse
+function Letters({ text }) {
+  return text.split(" ").map((word, w, all) => (
+    <span key={w}>
+      <span className="hw" aria-hidden="true">
+        {[...word].map((ch, i) => (
+          <span className="ch" key={i}>
+            {ch}
+          </span>
+        ))}
+      </span>
+      {w < all.length - 1 && " "}
+    </span>
+  ));
+}
+
 function App() {
+  const statementRef = useRef(null);
+
+  // Statement: words go from grey to dark as you scroll past
+  useEffect(() => {
+    const el = statementRef.current;
+    if (!el) return;
+    const words = el.querySelectorAll(".word");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      words.forEach((w) => w.classList.add("lit"));
+      el.classList.add("done");
+      return;
+    }
+    let ticking = false;
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const travel = r.height - window.innerHeight; // how far the screen stays pinned
+      const p = Math.min(1, Math.max(0, -r.top / (travel * 0.85)));
+      const lit = Math.round(p * words.length);
+      words.forEach((w, i) => w.classList.toggle("lit", i < lit));
+      el.classList.toggle("done", p >= 1);
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
   // Scroll reveals: fade elements in the first time they enter the screen
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -73,85 +130,87 @@ function App() {
     el.style.setProperty("--py", y.toFixed(3));
   };
   const onHeroMove = (e) => {
-    const r = e.currentTarget.getBoundingClientRect();
     setPointer(
       e.currentTarget,
-      (e.clientX - r.left) / r.width - 0.5,
-      (e.clientY - r.top) / r.height - 0.5,
+      e.clientX / window.innerWidth - 0.5,
+      e.clientY / window.innerHeight - 0.5,
     );
   };
   const onHeroLeave = (e) => setPointer(e.currentTarget, 0, 0);
 
   return (
     <main className="site-shell">
-      <div className="portfolio">
+      <div
+        className="portfolio"
+        onMouseMove={onHeroMove}
+        onMouseLeave={onHeroLeave}
+      >
         {/* NAVIGATION */}
-        <header className="navbar">
-          <a href="#home" className="brand">
-            <span className="brand-name">matt swales®</span>
-            <span className="brand-description">
-              Designer & full-stack developer
-            </span>
-          </a>
-
-          <nav className="nav-links">
-            <a href="#work">Work</a>
-            <a href="#about">About</a>
-            <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
-              Resume
+        <div className="hero-screen">
+          <header className="navbar">
+            <a href="#home" className="brand">
+              <span className="brand-name">matt swales®</span>
+              <span className="brand-description">
+                Designer & full-stack developer
+              </span>
             </a>
-            <a href="#contact" className="nav-contact">
-              Let’s talk ↗
+
+            <nav className="nav-links">
+              <a href="#work">Work</a>
+              <a href="#about">About</a>
+              <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
+                Resume
+              </a>
+              <a href="#contact" className="nav-contact">
+                Let’s talk ↗
+              </a>
+            </nav>
+          </header>
+
+          {/* HERO */}
+          <section className="hero" id="home">
+            <div className="hero-location">
+              <span className="location-dot"></span>
+              JAPAN/AICHI · OPEN TO FULL-TIME ROLES & RELOCATION
+            </div>
+
+            <h1
+              className="hero-title"
+              aria-label="Digital craft. Human instinct."
+            >
+              <span className="line">
+                <span className="line-inner">
+                  <Letters text="Digital craft." />
+                </span>
+              </span>
+              <span className="line">
+                <em className="line-inner">
+                  <Letters text="Human instinct." />
+                </em>
+              </span>
+            </h1>
+
+            <a href="#intro" className="scroll-cue">
+              SCROLL <span>↓</span>
             </a>
-          </nav>
-        </header>
+          </section>
+        </div>
 
-        {/* HERO */}
-        <section
-          className="hero"
-          id="home"
-          onMouseMove={onHeroMove}
-          onMouseLeave={onHeroLeave}
-        >
-          <div className="hero-location">
-            <span className="location-dot"></span>
-            JAPAN/AICHI · OPEN TO FULL-TIME ROLES & RELOCATION
-          </div>
-
-          <h1 className="hero-title">
-            <span className="line">
-              <span className="line-inner">Digital craft.</span>
-            </span>
-            <span className="line">
-              <em className="line-inner">Human instinct.</em>
-            </span>
-          </h1>
-
-          <div className="hero-content">
-            <div className="hero-intro">
-              <p>
-                I’m Matt, a designer and full-stack developer from England, now
-                living in Japan. I design and build websites and apps from start
-                to finish, and I love making things that work as well as they
-                look.
-              </p>
-
+        {/* STATEMENT */}
+        <section className="statement" id="intro" ref={statementRef}>
+          <div className="statement-stick">
+            <p className="statement-text">
+              {statement.split(" ").map((word, i) => (
+                <span className="word" key={i}>
+                  {word}{" "}
+                </span>
+              ))}
+            </p>
+            <div className="statement-cta">
               <a href="#contact" className="hero-button">
                 Let’s make something matter <span>↗</span>
               </a>
-
-              <div className="hero-caption">
-                STRATEGY · INTERFACE · CODE. Thoughtful from the first sketch to
-                the final pixel.
-              </div>
             </div>
-
-            {/* Swap the image: public/images/hero.jpg */}
-            <div
-              className="hero-image"
-              role="img"
-              aria-label="Design detail"
-            ></div>
           </div>
         </section>
 
@@ -168,18 +227,12 @@ function App() {
           </div>
 
           <div className="projects">
-            {projects.map((p) => (
-              <article className="project reveal" key={p.id}>
-                {/* Swap the image: public/images/meal-navi.jpg and camp-navi.jpg */}
-                <a
-                  href={p.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`project-preview ${p.id}-preview`}
-                  aria-label={p.aria}
-                ></a>
-
-                <div className="project-row">
+            {projects.map((p, i) => (
+              <article
+                className={`project-screen${i % 2 ? " flip" : ""}`}
+                key={p.id}
+              >
+                <div className="project-text reveal">
                   <div className="project-title">
                     <span className="project-type">{p.label}</span>
                     <h3>
@@ -202,6 +255,17 @@ function App() {
                       </a>
                     </div>
                   </div>
+                </div>
+
+                {/* Images: public/images/camp-navi.jpg and meal-navi.jpg */}
+                <div className="project-media reveal">
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`project-preview ${p.id}-preview`}
+                    aria-label={p.aria}
+                  ></a>
                 </div>
               </article>
             ))}
