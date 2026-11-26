@@ -88,7 +88,7 @@ h1, h2, h3, p, ol { margin: 0; padding: 0; }
 
 .projects { display: grid; gap: clamp(3rem, 6vw, 5rem); margin-top: 2.5rem; }
 .project-preview {
-  display: block; aspect-ratio: 1.6 / 1;
+  display: block; aspect-ratio: 1440 / 1024;
   border: 1px solid var(--line); background-color: #fff;
   background-size: cover; background-position: center; background-repeat: no-repeat;
 }
