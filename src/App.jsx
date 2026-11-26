@@ -1,11 +1,53 @@
 import "./App.css";
 
+const skills = [
+  "Figma",
+  "UX/UI Design",
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "React",
+  "Node.js",
+  "Express",
+  "MongoDB",
+  "Git & GitHub",
+];
+
+const process = [
+  {
+    number: "01",
+    title: "Understand",
+    description:
+      "Start with the problem. Understand who the product is for, what they need and what a better experience should look like.",
+  },
+  {
+    number: "02",
+    title: "Design",
+    description:
+      "Explore ideas, organise information and shape the experience in Figma before bringing the interface to life.",
+  },
+  {
+    number: "03",
+    title: "Build",
+    description:
+      "Turn the design into a working product, connecting the interface, application logic and data.",
+  },
+  {
+    number: "04",
+    title: "Refine",
+    description:
+      "Test the experience, improve the details and make sure everything feels considered across different screen sizes.",
+  },
+];
+
 function App() {
   return (
     <main className="site-shell">
       <div className="portfolio">
+        {/* NAVIGATION */}
+
         <header className="navbar">
-          <a href="#" className="brand">
+          <a href="#home" className="brand">
             <span className="brand-name">matt swales®</span>
             <span className="brand-description">
               Designer & full-stack developer
@@ -15,7 +57,8 @@ function App() {
           <nav className="nav-links">
             <a href="#work">Work</a>
             <a href="#about">About</a>
-            <a href="/Matt-Swales-CV.pdf" target="_blank">
+            <a href="#process">Process</a>
+            <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
               Resume
             </a>
             <a href="#contact" className="nav-contact">
@@ -24,7 +67,9 @@ function App() {
           </nav>
         </header>
 
-        <section className="hero">
+        {/* HERO */}
+
+        <section className="hero" id="home">
           <div className="hero-location">
             <span className="location-dot"></span>
             JAPAN / AICHI · OPEN TO FULL-TIME ROLES & RELOCATION
@@ -44,8 +89,8 @@ function App() {
                 look.
               </p>
 
-              <a href="#contact" className="hero-button">
-                Let's make something matter <span>↗</span>
+              <a href="#work" className="hero-button">
+                Explore my work <span>↗</span>
               </a>
 
               <div className="hero-caption">
@@ -55,32 +100,22 @@ function App() {
             </div>
 
             <div className="hero-visual">
-              <div className="ruler">
-                {Array.from({ length: 48 }, (_, i) => (
-                  <span key={i}></span>
-                ))}
+              <div className="hero-visual-top">
+                <span>DESIGN / DETAIL / PRECISION</span>
+                <span>01 — 26</span>
               </div>
 
-              <div className="visual-content">
-                <div className="visual-label">DESIGN / DETAIL / PRECISION</div>
+              <div className="hero-graphic">
+                <div className="graphic-ring ring-one"></div>
+                <div className="graphic-ring ring-two"></div>
+                <div className="graphic-ring ring-three"></div>
+                <div className="graphic-cross"></div>
+                <span className="graphic-coordinate">36° 09' N</span>
+              </div>
 
-                <div className="circle-row small-circles">
-                  {Array.from({ length: 11 }, (_, i) => (
-                    <span key={i}></span>
-                  ))}
-                </div>
-
-                <div className="circle-row medium-circles">
-                  {Array.from({ length: 8 }, (_, i) => (
-                    <span key={i}></span>
-                  ))}
-                </div>
-
-                <div className="circle-row large-circles">
-                  {Array.from({ length: 4 }, (_, i) => (
-                    <span key={i}></span>
-                  ))}
-                </div>
+              <div className="hero-visual-bottom">
+                <span>FORM FOLLOWS FUNCTION</span>
+                <span>EST. 2026</span>
               </div>
             </div>
           </div>
@@ -88,8 +123,10 @@ function App() {
           <div className="hero-bottom-line"></div>
         </section>
 
+        {/* SELECTED WORK */}
+
         <section className="work-section" id="work">
-          <div className="work-heading">
+          <div className="section-heading">
             <div>
               <span className="section-label">01 / SELECTED WORK</span>
               <h2>
@@ -97,8 +134,8 @@ function App() {
               </h2>
             </div>
 
-            <span className="work-count">
-              Two self-initiated concepts / 2026
+            <span className="section-side-note">
+              TWO SELF-INITIATED PROJECTS · 2026
             </span>
           </div>
 
@@ -108,12 +145,19 @@ function App() {
                 href="https://github.com/mjsdev7/Meal-Navi"
                 target="_blank"
                 rel="noreferrer"
-                className="project-preview"
+                className="project-preview meal-preview"
+                aria-label="View Meal-Navi on GitHub"
               >
-                <img
-                  src="/meal-navi-preview.png"
-                  alt="Meal-Navi application preview"
-                />
+                <div className="preview-placeholder meal-placeholder">
+                  <span className="placeholder-label">MEAL-NAVI</span>
+                  <div className="placeholder-copy">
+                    <span>Plan smarter.</span>
+                    <em>Cook easier.</em>
+                  </div>
+                  <span className="placeholder-note">
+                    PROJECT SCREENSHOT TO BE ADDED
+                  </span>
+                </div>
               </a>
 
               <div className="project-details">
@@ -121,34 +165,35 @@ function App() {
                   <span className="project-type">
                     01 / MEAL PLANNING · RESPONSIVE WEB APP
                   </span>
-                  <a
-                    href="https://github.com/mjsdev7/Meal-Navi"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Meal-Navi ↗
-                  </a>
+                  <h3>Meal-Navi</h3>
                 </div>
 
                 <div className="project-description">
                   <p>
-                    Less "what's for dinner?" More room for living.
-                    <br />
-                    Built with React, Node, Express and MongoDB, with JWT login
-                    and a recipe API.
+                    Less "what's for dinner?" More room for living. A meal
+                    planning application designed to make organising recipes,
+                    planning meals and everyday cooking easier.
                   </p>
 
                   <div className="project-meta">
-                    <span>UX/UI design · Full-stack development</span>
+                    <span>UX/UI DESIGN · FULL-STACK DEVELOPMENT</span>
                     <a
                       href="https://github.com/mjsdev7/Meal-Navi"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      View project ↗
+                      VIEW ON GITHUB ↗
                     </a>
                   </div>
                 </div>
+              </div>
+
+              <div className="project-tags">
+                <span>React</span>
+                <span>Node.js</span>
+                <span>Express</span>
+                <span>MongoDB</span>
+                <span>Figma</span>
               </div>
             </article>
 
@@ -157,12 +202,21 @@ function App() {
                 href="https://camp-navi.vercel.app/"
                 target="_blank"
                 rel="noreferrer"
-                className="project-preview"
+                className="project-preview camp-preview"
+                aria-label="Visit Camp-Navi"
               >
-                <img
-                  src="/camp-navi-preview.png"
-                  alt="Camp-Navi website preview"
-                />
+                <div className="preview-placeholder camp-placeholder">
+                  <span className="placeholder-label">
+                    CAMP-NAVI / DISCOVER JAPAN
+                  </span>
+                  <div className="placeholder-copy">
+                    <span>Find your</span>
+                    <em>next escape.</em>
+                  </div>
+                  <span className="placeholder-note">
+                    PROJECT SCREENSHOT TO BE ADDED
+                  </span>
+                </div>
               </a>
 
               <div className="project-details">
@@ -170,37 +224,174 @@ function App() {
                   <span className="project-type">
                     02 / CAMPING DISCOVERY · RESPONSIVE WEB APP
                   </span>
-                  <a
-                    href="https://camp-navi.vercel.app/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Camp-Navi ↗
-                  </a>
+                  <h3>Camp-Navi</h3>
                 </div>
 
                 <div className="project-description">
                   <p>
-                    Less searching. More outside.
-                    <br />
-                    Built with Node, Express and MongoDB, with Passport login
-                    and image uploads.
+                    Less searching. More outside. A campground discovery
+                    platform built to help people explore places to stay and
+                    discover destinations across Japan.
                   </p>
 
                   <div className="project-meta">
-                    <span>UX/UI design · Full-stack development</span>
+                    <span>UX/UI DESIGN · FULL-STACK DEVELOPMENT</span>
                     <a
                       href="https://camp-navi.vercel.app/"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      View project ↗
+                      VISIT WEBSITE ↗
                     </a>
                   </div>
                 </div>
               </div>
+
+              <div className="project-tags">
+                <span>JavaScript</span>
+                <span>Node.js</span>
+                <span>Express</span>
+                <span>MongoDB</span>
+                <span>Maps</span>
+              </div>
             </article>
           </div>
+        </section>
+
+        {/* ABOUT */}
+
+        <section className="about-section" id="about">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">02 / ABOUT ME</span>
+              <h2>
+                Design-minded.
+                <br />
+                <em>Curious by nature.</em>
+              </h2>
+            </div>
+          </div>
+
+          <div className="about-content">
+            <div className="about-intro">
+              <p className="about-lead">
+                I enjoy working where design and technology meet.
+              </p>
+
+              <p>
+                I'm Matt, originally from England and now based in Aichi, Japan.
+                My interest is in creating digital experiences that feel clear,
+                useful and enjoyable to use.
+              </p>
+
+              <p>
+                I bring together UX/UI design and hands-on development, taking
+                ideas from early concepts in Figma through to building and
+                refining working web applications.
+              </p>
+
+              <p>
+                I care about the details, but always keep the bigger picture in
+                mind: making something that genuinely works for the people using
+                it.
+              </p>
+            </div>
+
+            <div className="about-skills">
+              <span className="section-label">TOOLS & TECHNOLOGIES</span>
+
+              <div className="skills-list">
+                {skills.map((skill) => (
+                  <span key={skill}>{skill}</span>
+                ))}
+              </div>
+
+              <div className="about-note">
+                <span className="location-dot"></span>
+                BASED IN AICHI, JAPAN · PERMANENT RESIDENT
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PROCESS */}
+
+        <section className="process-section" id="process">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">03 / MY APPROACH</span>
+              <h2>
+                From idea to <em>interface.</em>
+              </h2>
+            </div>
+
+            <p className="section-side-note">
+              A considered approach to making digital products.
+            </p>
+          </div>
+
+          <div className="process-grid">
+            {process.map((step) => (
+              <article className="process-card" key={step.number}>
+                <span className="process-number">{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* CONTACT */}
+
+        <section className="contact-section" id="contact">
+          <span className="section-label">04 / GET IN TOUCH</span>
+
+          <div className="contact-content">
+            <div>
+              <h2>
+                Have something
+                <br />
+                in <em>mind?</em>
+              </h2>
+
+              <p>
+                I'm open to opportunities in design, frontend and full-stack
+                development. If you have a project or role in mind, I'd love to
+                hear from you.
+              </p>
+
+              <a
+                href="mailto:m.j.swales@hotmail.com"
+                className="contact-button"
+              >
+                Get in touch <span>↗</span>
+              </a>
+            </div>
+
+            <div className="contact-links">
+              <a href="mailto:m.j.swales@hotmail.com">
+                EMAIL <span>↗</span>
+              </a>
+
+              <a
+                href="https://github.com/mjsdev7"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GITHUB <span>↗</span>
+              </a>
+
+              <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
+                RESUME <span>↗</span>
+              </a>
+            </div>
+          </div>
+
+          <footer className="footer">
+            <span>© 2026 MATT SWALES</span>
+            <span>DESIGNED & BUILT WITH CARE</span>
+            <a href="#home">BACK TO TOP ↑</a>
+          </footer>
         </section>
       </div>
     </main>
