@@ -1,10 +1,7 @@
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
-
 :root {
-  font-family: 'DM Sans', sans-serif;
-  color: #25251f;
-  background: #20211f;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #242622;
+  background: #f4f2ec;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -39,6 +36,6 @@ button {
 }
 
 ::selection {
-  background: #b64e35;
+  background: #a0503a;
   color: #fff;
 }
