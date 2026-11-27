@@ -387,31 +387,30 @@ function App() {
         </section>
 
         {/* CONTACT */}
-        <section className="contact-section scene" id="contact">
-          <div className="scene-stick contact-stick">
-            <div className="contact-content open-window">
-              <div>
-                <span className="section-label">04 / GET IN TOUCH</span>
-                <h2>
-                  Something good starts
-                  <br />
-                  with hello.
-                </h2>
-              </div>
+        <section className="contact-section" id="contact">
+          <div className="contact-stick">
+            <div className="contact-top reveal">
+              <span className="section-label">04 / GET IN TOUCH</span>
+              <p>
+                Hiring, or have a project in mind? I’d love to hear from you.
+              </p>
+            </div>
 
-              <div className="contact-side">
-                <p>
-                  Hiring, or have a project in mind? I’d love to hear from you.
-                </p>
+            <div className="contact-main reveal">
+              <p className="contact-kicker">
+                Something good starts with hello.
+              </p>
+              <a className="contact-email" href="mailto:m.j.swales@hotmail.com">
+                m.j.swales@hotmail.com <span>↗</span>
+              </a>
+              <div className="contact-links">
                 <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
                   Resume
                 </a>
-                <a href="mailto:m.j.swales@hotmail.com">Email me ↗</a>
                 <a
                   href="https://github.com/mjsdev7"
                   target="_blank"
                   rel="noreferrer"
-                  className="contact-small"
                 >
                   GitHub / mjsdev7 ↗
                 </a>
