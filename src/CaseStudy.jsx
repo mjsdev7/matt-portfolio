@@ -4,7 +4,10 @@ import "./case-study.css";
 function Section({ label, title, paragraphs, children, shots }) {
   return (
     <section className="cs-section">
-      <div className="cs-side reveal">
+      <div
+        className="cs-side reveal"
+        style={{ position: "static", top: "auto" }}
+      >
         <span className="section-label">{label}</span>
         <h2>{title}</h2>
       </div>
