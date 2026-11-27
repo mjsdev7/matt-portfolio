@@ -1,73 +1,96 @@
-/* ---------- Projects: one full screen each, lines above and below ---------- */
-.projects { display: block; gap: 0; margin-top: 2.5rem; }
+/* =========================================================
+   Scroll scenes: each page stays pinned while something happens.
+   --p is 0 to 1 as you scroll through a page (set in App.jsx).
+   Change the heights below to make a page stay longer or shorter.
+   ========================================================= */
+.scene { --open: clamp(0, calc(var(--p, 0) * 2.2), 1); }
+.scene-stick { position: sticky; top: 0; height: 100vh; height: 100svh; }
 
-.project-screen {
-  min-height: 100vh;
-  min-height: 100svh;
+/* "Window" opening: grows from a small centre window to full size */
+.open-window {
+  clip-path: inset(calc((1 - var(--open)) * 38%) calc((1 - var(--open)) * 38%));
+  opacity: calc(0.2 + var(--open) * 0.8);
+}
+
+/* Lines between pages use the accent colour */
+.statement, .work-section, .about-section, .process-section, .project-screen { border-top: 1px solid var(--accent); }
+.work-section, .about-section, .process-section { padding-block: 0; }
+
+/* ---------- Hero: headline slides apart and fades ---------- */
+.hero-screen { display: block; min-height: 0; height: 170vh; }
+.hero-screen .scene-stick { display: flex; flex-direction: column; }
+.hero-title .line:nth-child(1) { transform: translateX(calc(var(--p, 0) * -14vw)); transition: transform 0.3s ease-out; }
+.hero-title .line:nth-child(2) { transform: translateX(calc(var(--px, 0) * 12px + var(--p, 0) * 14vw)); transition: transform 0.3s ease-out; }
+.hero-title { opacity: calc(1 - var(--p, 0) * 1.15); }
+.scroll-cue { opacity: calc(1 - var(--p, 0) * 4); }
+
+/* ---------- "Useful by design." title page ---------- */
+.work-title { height: 160vh; }
+
+/* ---------- Projects: text and picture open like windows ---------- */
+.projects { display: block; gap: 0; margin-top: 0; }
+.project-screen { display: block; height: 230vh; padding: 0; }
+.project-grid {
   display: grid;
   grid-template-columns: 1fr 1.7fr; /* text left, image right */
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
   padding-block: clamp(2.5rem, 5vw, 4rem);
-  border-top: 1px solid var(--line);
 }
-
-/* Every second project flips: image left, text right */
-.project-screen.flip { grid-template-columns: 1.4fr 1fr; }
+.project-screen.flip .project-grid { grid-template-columns: 1.4fr 1fr; }
 .project-screen.flip .project-media { order: -1; }
-
 .project-media { width: 100%; }
 
 .project-text .project-title h3 { font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: 1; margin-top: 0.9rem; }
 .project-text .project-description { margin-top: 2rem; max-width: 26rem; }
 .project-text .project-description p { font-size: 0.95rem; }
-.project-text .project-meta {
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0.9rem;
-  margin-top: 1.75rem;
-}
+.project-text .project-meta { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 0.9rem; margin-top: 1.75rem; }
 
-@media (max-width: 860px) {
-  .project-screen, .project-screen.flip { grid-template-columns: 1fr; min-height: auto; padding-block: 3rem; }
-  .project-screen.flip .project-media { order: 0; }
-}
-
-/* ---------- Every section is a full screen ---------- */
-.work-section, .about-section, .process-section { padding-block: 0; }
-
-/* "Useful by design." becomes its own title screen */
-.work-section .section-heading {
-  min-height: 100vh;
-  min-height: 100svh;
-  align-items: flex-end;
-  padding-bottom: clamp(3rem, 6vw, 5rem);
-}
+/* ---------- Work title page layout ---------- */
+.work-section .section-heading { align-items: flex-end; padding-bottom: clamp(3rem, 6vw, 5rem); }
 .work-section .section-heading h2 { font-size: clamp(3.5rem, 11vw, 10rem); margin-top: 1.25rem; }
 
-/* About and Process fill the screen with content centred */
-.about-section, .process-section {
-  min-height: 100vh;
-  min-height: 100svh;
+/* ---------- About: photo opens like a circle ---------- */
+.about-section { display: block; height: 200vh; padding: 0; }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
   padding-block: clamp(3rem, 6vw, 5rem);
 }
+.portrait { clip-path: circle(calc(var(--open) * 50%)); }
 
-/* Contact: headline in the middle, footer bar pinned to the bottom */
-.contact-section { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
-.contact-content { flex: 1; align-items: center; }
-.contact-section h2 { font-size: clamp(2.8rem, 6.4vw, 6.5rem); }
-.footer { margin-top: 2rem; }
-
-@media (max-width: 860px) {
-  .work-section .section-heading, .about-section, .process-section, .contact-section { min-height: auto; }
-  .work-section .section-heading { padding-block: 4rem 2rem; }
-  .about-section, .process-section { padding-block: 3rem; }
+/* ---------- Process: steps appear one by one ---------- */
+.process-section { display: block; height: 260vh; padding: 0; }
+.process-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+.process-list li {
+  --s: clamp(0, calc(var(--p, 0) * 6 - var(--i, 0) * 0.9), 1);
+  opacity: var(--s);
+  transform: translateY(calc((1 - var(--s)) * 24px));
 }
 
-/* ---------- Footer / contact in the accent colour ---------- */
-.contact-section { background: var(--accent); }
+/* ---------- Contact / footer in the accent colour ---------- */
+.contact-section { display: block; min-height: 0; height: 170vh; padding: 0; background: var(--accent); }
+.contact-stick { display: flex; flex-direction: column; padding: clamp(2.5rem, 5vw, 4rem) var(--pad) 1.5rem; }
+.contact-content { flex: 1; align-items: center; }
+.contact-section h2 { font-size: clamp(2.8rem, 6.4vw, 6.5rem); }
 .contact-section .section-label { color: rgba(244, 242, 236, 0.85); }
 .contact-side p { color: #f4f2ec; }
-.footer { border-top-color: rgba(244, 242, 236, 0.4); }
+.footer { margin-top: 2rem; border-top-color: rgba(244, 242, 236, 0.4); }
+
+/* ---------- Phones and reduced motion: no pinning, everything just shows ---------- */
+@media (max-width: 860px) {
+  .scene { height: auto !important; }
+  .scene-stick { position: static; height: auto; }
+  .hero-screen .scene-stick { min-height: 100svh; }
+  .project-grid, .project-screen.flip .project-grid, .about-grid, .process-grid { grid-template-columns: 1fr; padding-block: 3rem; }
+  .project-screen.flip .project-media { order: 0; }
+  .work-section .section-heading { padding-block: 4rem 2rem; }
+}

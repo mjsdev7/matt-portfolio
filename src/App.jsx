@@ -124,6 +124,42 @@ function App() {
     return () => io.disconnect();
   }, []);
 
+  // Scenes: each pinned page gets --p (0 to 1) as you scroll through it
+  useEffect(() => {
+    const scenes = document.querySelectorAll(".scene");
+    const still = [
+      window.matchMedia("(prefers-reduced-motion: reduce)"),
+      window.matchMedia("(max-width: 860px)"),
+    ];
+    let ticking = false;
+    const update = () => {
+      const vh = window.innerHeight;
+      const skip = still.some((m) => m.matches);
+      scenes.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (!skip && (r.bottom < -vh || r.top > vh * 2)) return;
+        const travel = r.height - vh;
+        const p =
+          skip || travel <= 0 ? 1 : Math.min(1, Math.max(0, -r.top / travel));
+        el.style.setProperty("--p", p.toFixed(4));
+      });
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   // Interactive hero: track the mouse as -0.5 to 0.5 across the hero
   const setPointer = (el, x, y) => {
     el.style.setProperty("--px", x.toFixed(3));
@@ -146,54 +182,56 @@ function App() {
         onMouseLeave={onHeroLeave}
       >
         {/* NAVIGATION */}
-        <div className="hero-screen">
-          <header className="navbar">
-            <a href="#home" className="brand">
-              <span className="brand-name">matt swales®</span>
-              <span className="brand-description">
-                Designer & full-stack developer
-              </span>
-            </a>
-
-            <nav className="nav-links">
-              <a href="#work">Work</a>
-              <a href="#about">About</a>
-              <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
-                Resume
-              </a>
-              <a href="#contact" className="nav-contact">
-                Let’s talk ↗
-              </a>
-            </nav>
-          </header>
-
-          {/* HERO */}
-          <section className="hero" id="home">
-            <div className="hero-location">
-              <span className="location-dot"></span>
-              JAPAN/AICHI · OPEN TO FULL-TIME ROLES & RELOCATION
-            </div>
-
-            <h1
-              className="hero-title"
-              aria-label="Digital craft. Human instinct."
-            >
-              <span className="line">
-                <span className="line-inner">
-                  <Letters text="Digital craft." />
+        <div className="hero-screen scene">
+          <div className="scene-stick">
+            <header className="navbar">
+              <a href="#home" className="brand">
+                <span className="brand-name">matt swales®</span>
+                <span className="brand-description">
+                  Designer & full-stack developer
                 </span>
-              </span>
-              <span className="line">
-                <em className="line-inner">
-                  <Letters text="Human instinct." />
-                </em>
-              </span>
-            </h1>
+              </a>
 
-            <a href="#intro" className="scroll-cue">
-              SCROLL <span>↓</span>
-            </a>
-          </section>
+              <nav className="nav-links">
+                <a href="#work">Work</a>
+                <a href="#about">About</a>
+                <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
+                  Resume
+                </a>
+                <a href="#contact" className="nav-contact">
+                  Let’s talk ↗
+                </a>
+              </nav>
+            </header>
+
+            {/* HERO */}
+            <section className="hero" id="home">
+              <div className="hero-location">
+                <span className="location-dot"></span>
+                JAPAN/AICHI · OPEN TO FULL-TIME ROLES & RELOCATION
+              </div>
+
+              <h1
+                className="hero-title"
+                aria-label="Digital craft. Human instinct."
+              >
+                <span className="line">
+                  <span className="line-inner">
+                    <Letters text="Digital craft." />
+                  </span>
+                </span>
+                <span className="line">
+                  <em className="line-inner">
+                    <Letters text="Human instinct." />
+                  </em>
+                </span>
+              </h1>
+
+              <a href="#intro" className="scroll-cue">
+                SCROLL <span>↓</span>
+              </a>
+            </section>
+          </div>
         </div>
 
         {/* STATEMENT */}
@@ -216,56 +254,60 @@ function App() {
 
         {/* SELECTED WORK */}
         <section className="work-section" id="work">
-          <div className="section-heading reveal">
-            <div>
-              <span className="section-label">01 / SELECTED WORK</span>
-              <h2>Useful by design.</h2>
+          <div className="work-title scene">
+            <div className="scene-stick section-heading">
+              <div className="open-window">
+                <span className="section-label">01 / SELECTED WORK</span>
+                <h2>Useful by design.</h2>
+              </div>
+              <span className="section-side-note open-window">
+                Two self-initiated concepts / 2026
+              </span>
             </div>
-            <span className="section-side-note">
-              Two self-initiated concepts / 2026
-            </span>
           </div>
 
           <div className="projects">
             {projects.map((p, i) => (
               <article
-                className={`project-screen${i % 2 ? " flip" : ""}`}
+                className={`project-screen scene${i % 2 ? " flip" : ""}`}
                 key={p.id}
               >
-                <div className="project-text reveal">
-                  <div className="project-title">
-                    <span className="project-type">{p.label}</span>
-                    <h3>
-                      <a href={p.href} target="_blank" rel="noreferrer">
-                        {p.title} <span>↗</span>
-                      </a>
-                    </h3>
-                  </div>
+                <div className="scene-stick project-grid">
+                  <div className="project-text open-window">
+                    <div className="project-title">
+                      <span className="project-type">{p.label}</span>
+                      <h3>
+                        <a href={p.href} target="_blank" rel="noreferrer">
+                          {p.title} <span>↗</span>
+                        </a>
+                      </h3>
+                    </div>
 
-                  <div className="project-description">
-                    <p>
-                      {p.lines[0]}
-                      <br />
-                      {p.lines[1]}
-                    </p>
-                    <div className="project-meta">
-                      <span>UX/UI design · Full-stack development</span>
-                      <a href={p.href} target="_blank" rel="noreferrer">
-                        Read case study ↗
-                      </a>
+                    <div className="project-description">
+                      <p>
+                        {p.lines[0]}
+                        <br />
+                        {p.lines[1]}
+                      </p>
+                      <div className="project-meta">
+                        <span>UX/UI design · Full-stack development</span>
+                        <a href={p.href} target="_blank" rel="noreferrer">
+                          Read case study ↗
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Images: public/images/camp-navi.jpg and meal-navi.jpg */}
-                <div className="project-media reveal">
-                  <a
-                    href={p.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`project-preview ${p.id}-preview`}
-                    aria-label={p.aria}
-                  ></a>
+                  {/* Images: public/images/camp-navi.jpg and meal-navi.jpg */}
+                  <div className="project-media open-window">
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`project-preview ${p.id}-preview`}
+                      aria-label={p.aria}
+                    ></a>
+                  </div>
                 </div>
               </article>
             ))}
@@ -273,107 +315,115 @@ function App() {
         </section>
 
         {/* ABOUT */}
-        <section className="about-section" id="about">
-          <div className="about-photo reveal">
-            {/* Swap the image: public/images/matt.jpg */}
-            <div className="portrait" role="img" aria-label="Matt Swales"></div>
-            <span className="portrait-caption">MATT SWALES / AICHI, JAPAN</span>
-          </div>
-
-          <div className="about-text reveal">
-            <span className="section-label">02 / A LITTLE ABOUT ME</span>
-            <h2>A designer’s eye. A developer’s mind.</h2>
-            <p className="about-lead">
-              I’m Matt Swales, a designer and full-stack developer from England,
-              now living in Japan. I make complicated things feel simple,
-              without making them feel ordinary.
-            </p>
-            <p className="about-body">
-              I enjoy working across both design and development, turning ideas
-              into digital experiences that look good and feel easy to use. From
-              the first Figma design to the final details in the browser, I like
-              being involved in the whole process.
-            </p>
-            <div className="about-skills">
-              <span className="section-label">
-                THINKING, DESIGNING & BUILDING WITH
+        <section className="about-section scene" id="about">
+          <div className="scene-stick about-grid">
+            <div className="about-photo reveal">
+              {/* Swap the image: public/images/matt.jpg */}
+              <div
+                className="portrait"
+                role="img"
+                aria-label="Matt Swales"
+              ></div>
+              <span className="portrait-caption">
+                MATT SWALES / AICHI, JAPAN
               </span>
-              <p>
-                Figma · UX/UI · HTML · CSS · JavaScript · React · Node · Express
-                · MongoDB.
+            </div>
+
+            <div className="about-text reveal">
+              <span className="section-label">02 / A LITTLE ABOUT ME</span>
+              <h2>A designer’s eye. A developer’s mind.</h2>
+              <p className="about-lead">
+                I’m Matt Swales, a designer and full-stack developer from
+                England, now living in Japan. I make complicated things feel
+                simple, without making them feel ordinary.
               </p>
+              <p className="about-body">
+                I enjoy working across both design and development, turning
+                ideas into digital experiences that look good and feel easy to
+                use. From the first Figma design to the final details in the
+                browser, I like being involved in the whole process.
+              </p>
+              <div className="about-skills">
+                <span className="section-label">
+                  THINKING, DESIGNING & BUILDING WITH
+                </span>
+                <p>
+                  Figma · UX/UI · HTML · CSS · JavaScript · React · Node ·
+                  Express · MongoDB.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* PROCESS */}
-        <section className="process-section" id="process">
-          <div className="process-intro reveal">
-            <span className="section-label">03 / HOW I WORK</span>
-            <h2>
-              A clear process.
-              <br />
-              Room to explore.
-            </h2>
-            <p>
-              Not a straight line, but a thoughtful loop. Each step brings the
-              product closer to the people who will use it.
-            </p>
-          </div>
+        <section className="process-section scene" id="process">
+          <div className="scene-stick process-grid">
+            <div className="process-intro reveal">
+              <span className="section-label">03 / HOW I WORK</span>
+              <h2>
+                A clear process.
+                <br />
+                Room to explore.
+              </h2>
+              <p>
+                Not a straight line, but a thoughtful loop. Each step brings the
+                product closer to the people who will use it.
+              </p>
+            </div>
 
-          <ol className="process-list">
-            {steps.map((s, i) => (
-              <li
-                key={s.title}
-                className="reveal"
-                style={{ transitionDelay: `${i * 90}ms` }}
-              >
-                <span className="process-number">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
-              </li>
-            ))}
-          </ol>
+            <ol className="process-list">
+              {steps.map((s, i) => (
+                <li key={s.title} style={{ "--i": i }}>
+                  <span className="process-number">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{s.title}</h3>
+                  <p>{s.text}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </section>
 
         {/* CONTACT */}
-        <section className="contact-section" id="contact">
-          <div className="contact-content reveal">
-            <div>
-              <span className="section-label">04 / GET IN TOUCH</span>
-              <h2>
-                Something good starts
-                <br />
-                with hello.
-              </h2>
+        <section className="contact-section scene" id="contact">
+          <div className="scene-stick contact-stick">
+            <div className="contact-content open-window">
+              <div>
+                <span className="section-label">04 / GET IN TOUCH</span>
+                <h2>
+                  Something good starts
+                  <br />
+                  with hello.
+                </h2>
+              </div>
+
+              <div className="contact-side">
+                <p>
+                  Hiring, or have a project in mind? I’d love to hear from you.
+                </p>
+                <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
+                  Resume
+                </a>
+                <a href="mailto:m.j.swales@hotmail.com">Email me ↗</a>
+                <a
+                  href="https://github.com/mjsdev7"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="contact-small"
+                >
+                  GitHub / mjsdev7 ↗
+                </a>
+              </div>
             </div>
 
-            <div className="contact-side">
-              <p>
-                Hiring, or have a project in mind? I’d love to hear from you.
-              </p>
-              <a href="/Matt-Swales-CV.pdf" target="_blank" rel="noreferrer">
-                Resume
-              </a>
-              <a href="mailto:m.j.swales@hotmail.com">Email me ↗</a>
-              <a
-                href="https://github.com/mjsdev7"
-                target="_blank"
-                rel="noreferrer"
-                className="contact-small"
-              >
-                GitHub / mjsdev7 ↗
-              </a>
-            </div>
+            <footer className="footer">
+              <span>© 2026 Matt Swales · Portfolio</span>
+              <span>Designed with care. Built with intention.</span>
+              <a href="#home">Back to top ↑</a>
+            </footer>
           </div>
-
-          <footer className="footer">
-            <span>© 2026 Matt Swales · Portfolio</span>
-            <span>Designed with care. Built with intention.</span>
-            <a href="#home">Back to top ↑</a>
-          </footer>
         </section>
       </div>
     </main>
