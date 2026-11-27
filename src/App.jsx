@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import "./animations.css";
 import "./hero-fullscreen.css";
 import "./sections.css";
+import MealNaviCaseStudy from "./MealNaviCaseStudy";
 
 const projects = [
   {
@@ -21,6 +22,7 @@ const projects = [
     label: "02 / MEAL PLANNING · RESPONSIVE WEB APP",
     title: "Meal-Navi",
     href: "https://github.com/mjsdev7/Meal-Navi",
+    caseStudy: "#/meal-navi",
     aria: "View Meal-Navi on GitHub",
     lines: [
       "Less “what’s for dinner?” More room for living.",
@@ -71,8 +73,15 @@ function Letters({ text }) {
   ));
 }
 
-function App() {
+function Home() {
   const statementRef = useRef(null);
+
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    const target =
+      id && !id.startsWith("/") ? document.getElementById(id) : null;
+    if (target) window.scrollTo({ top: target.offsetTop, behavior: "instant" });
+  }, []);
 
   // Statement: words go from grey to dark as you scroll past
   useEffect(() => {
@@ -291,9 +300,13 @@ function App() {
                       </p>
                       <div className="project-meta">
                         <span>UX/UI design · Full-stack development</span>
-                        <a href={p.href} target="_blank" rel="noreferrer">
-                          Read case study ↗
-                        </a>
+                        {p.caseStudy ? (
+                          <a href={p.caseStudy}>Read case study ↗</a>
+                        ) : (
+                          <a href={p.href} target="_blank" rel="noreferrer">
+                            Visit website ↗
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -427,6 +440,16 @@ function App() {
       </div>
     </main>
   );
+}
+
+function App() {
+  const [route, setRoute] = useState(window.location.hash);
+  useEffect(() => {
+    const onHash = () => setRoute(window.location.hash);
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+  return route === "#/meal-navi" ? <MealNaviCaseStudy /> : <Home />;
 }
 
 export default App;

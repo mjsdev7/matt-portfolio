@@ -1,0 +1,124 @@
+.cs-hero {
+  min-height: calc(100svh - 7rem);
+  margin-inline: var(--pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.cs-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  animation: fadeUp 0.9s ease backwards;
+}
+.cs-hero h1 {
+  margin-top: 1.75rem;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(3rem, 8.4vw, 8.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  animation: fadeUp 1.1s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+.cs-hero h1 em { font-family: var(--serif); font-weight: 400; letter-spacing: -0.04em; white-space: nowrap; }
+.cs-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--accent);
+  animation: fadeUp 1s 0.5s ease backwards;
+}
+.cs-meta dt { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+.cs-meta dd { margin-top: 0.6rem; font-size: 0.9rem; line-height: 1.5; }
+.cs-meta a { color: var(--accent); }
+
+.cs-section {
+  margin-inline: var(--pad);
+  padding-block: clamp(4rem, 9vw, 8rem);
+  border-top: 1px solid var(--accent);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.cs-side { position: sticky; top: 2rem; }
+.cs-side h2 {
+  margin-top: 1rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.cs-body p { max-width: 40rem; font-size: 0.95rem; line-height: 1.7; color: var(--muted); }
+.cs-body p:first-child { font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.5; color: var(--ink); }
+.cs-body p + p { margin-top: 1.4rem; }
+
+.cs-shots {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+.cs-shot {
+  aspect-ratio: 5 / 7;
+  border: 1px solid var(--line);
+  background: #e8e4d8 center top / cover no-repeat;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s ease;
+}
+.cs-shot:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -24px rgba(36, 38, 34, 0.35); }
+.cs-shots figcaption { margin-top: 0.9rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+
+.cs-priorities { list-style: none; display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(2rem, 4vw, 4rem); }
+.cs-priorities li { padding: 1.5rem 0 2.25rem; border-top: 1px solid var(--line); }
+.cs-priorities .num { font-family: var(--mono); font-size: 0.55rem; color: var(--accent); }
+.cs-priorities h3 { margin-top: 0.8rem; font-family: var(--sans); font-weight: 300; font-size: clamp(1.5rem, 2.4vw, 2.1rem); letter-spacing: -0.025em; }
+.cs-priorities p { margin-top: 0.6rem; font-size: 0.85rem; line-height: 1.6; color: var(--muted); }
+
+.cs-outcome {
+  min-height: 85svh;
+  padding: clamp(4rem, 9vw, 8rem) var(--pad) 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4rem;
+  background: var(--accent);
+  color: #f4f2ec;
+}
+.cs-outcome .section-label { color: rgba(244, 242, 236, 0.85); }
+.cs-outcome-text {
+  margin-top: 1.5rem;
+  max-width: 62rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3.8vw, 3.4rem);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.cs-outcome-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(244, 242, 236, 0.4);
+  font-size: 0.8rem;
+}
+.cs-outcome-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+@media (max-width: 860px) {
+  .cs-hero { min-height: auto; padding-top: 4rem; }
+  .cs-meta { grid-template-columns: 1fr 1fr; }
+  .cs-section { grid-template-columns: 1fr; }
+  .cs-side { position: static; }
+  .cs-shots { gap: 0.6rem; }
+  .cs-priorities { grid-template-columns: 1fr; }
+  .cs-outcome-links { flex-direction: column; }
+}
