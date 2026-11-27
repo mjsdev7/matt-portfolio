@@ -1,3 +1,5 @@
+.site-shell { overflow-x: clip; }
+
 .scene { --open: clamp(0, calc(var(--p, 0) * 2.2), 1); }
 .scene-stick { position: sticky; top: 0; height: 100vh; height: 100svh; }
 
