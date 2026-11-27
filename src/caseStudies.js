@@ -31,7 +31,7 @@ const caseStudies = {
       { key: "planner", label: "Weekly planner" },
       { key: "shopping", label: "Shopping list" },
     ],
-    ratio: "5 / 7",
+    ratio: "16 / 9",
     priorities: [
       { title: "Information hierarchy", text: "Clear structure for better navigation." },
       { title: "User engagement", text: "A welcoming experience that encourages return visits." },
