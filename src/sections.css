@@ -13,10 +13,12 @@
 
 .hero-screen { display: block; min-height: 0; height: 170vh; }
 .hero-screen .scene-stick { display: flex; flex-direction: column; }
-.hero-title .line:nth-child(1) { transform: translateX(calc(var(--p, 0) * -14vw)); transition: transform 0.3s ease-out; }
-.hero-title .line:nth-child(2) { transform: translateX(calc(var(--px, 0) * 12px + var(--p, 0) * 14vw)); transition: transform 0.3s ease-out; }
-.hero-title { opacity: calc(1 - var(--p, 0) * 1.15); }
-.scroll-cue { opacity: calc(1 - var(--p, 0) * 4); }
+@media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+  .hero-title .line:nth-child(1) { transform: translateX(calc(var(--p, 0) * -14vw)); transition: transform 0.3s ease-out; }
+  .hero-title .line:nth-child(2) { transform: translateX(calc(var(--px, 0) * 12px + var(--p, 0) * 14vw)); transition: transform 0.3s ease-out; }
+  .hero-title { opacity: calc(1 - var(--p, 0) * 1.15); }
+  .scroll-cue { opacity: calc(1 - var(--p, 0) * 4); }
+}
 
 .work-title { height: 160vh; }
 
