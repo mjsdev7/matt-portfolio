@@ -57,12 +57,13 @@ const caseStudies = {
       { label: "LIVE", value: "Visit site ↗", href: "https://camp-navi.vercel.app/" },
     ],
     overview: [
-      "Camp-Navi is a campground discovery platform built to help people explore places to stay and discover destinations across Japan. It combines full-stack development, including Passport login and image uploads, with UI design.",
+      "Camp-Navi is a campground discovery platform built to help people explore places to stay and discover destinations across Japan. Campgrounds appear on an interactive map and in a list, each with its own page for photos, location, price and reviews. It combines full-stack development, including Passport login and image uploads, with UI design.",
       "I built the first version around the core functionality. Once it was working, I looked at it with fresh eyes and felt it looked too simple. The experience worked, but it didn’t capture the feeling of getting outside that the product is about.",
       "So I went back to Figma and changed the direction.",
     ],
     original: [
-      "The first version got the essentials in place, but the design felt simple. It didn’t yet carry the atmosphere of the product or give people a reason to keep exploring.",
+      "The first version put the core features in place: a map of campgrounds across Japan, a list to browse, and a page for each campground with photos, details, a map and a review form. It also included a dark mode toggle and login.",
+      "It worked, but it relied on default-looking components, and the result looked simple. Most screens read as standard pages rather than a product with its own personality, and nothing about the layout guided people towards finding the right place to stay.",
       "My aim was to move beyond a functional first pass and give Camp-Navi a character of its own.",
     ],
     redesign: [
@@ -72,10 +73,10 @@ const caseStudies = {
     ],
     shots: [
       { key: "home", label: "Homepage" },
-      { key: "explore", label: "Explore" },
-      { key: "campground", label: "Campground" },
+      { key: "explore", label: "Campgrounds" },
+      { key: "campground", label: "Campground page" },
     ],
-    ratio: "5 / 7",
+    ratio: "16 / 10",
     priorities: [
       { title: "Atmosphere", text: "Immersive photography that sets the tone." },
       { title: "Discovery", text: "Clear paths to explore places to stay." },
