@@ -69,7 +69,7 @@
   margin-top: clamp(1.5rem, 4vw, 3rem);
 }
 .cs-shot {
-  aspect-ratio: 5 / 7;
+  aspect-ratio: var(--shot-ratio, 5 / 7);
   border: 1px solid var(--line);
   background: #e8e4d8 center top / cover no-repeat;
   transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s ease;

@@ -3,7 +3,8 @@ import "./App.css";
 import "./animations.css";
 import "./hero-fullscreen.css";
 import "./sections.css";
-import MealNaviCaseStudy from "./MealNaviCaseStudy";
+import CaseStudy from "./CaseStudy";
+import caseStudies from "./caseStudies";
 
 const projects = [
   {
@@ -11,6 +12,7 @@ const projects = [
     label: "01 / CAMPING DISCOVERY · RESPONSIVE WEB APP",
     title: "Camp-Navi",
     href: "https://camp-navi.vercel.app/",
+    caseStudy: "#/camp-navi",
     aria: "Visit Camp-Navi",
     lines: [
       "Less searching. More outside.",
@@ -449,7 +451,9 @@ function App() {
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
-  return route === "#/meal-navi" ? <MealNaviCaseStudy /> : <Home />;
+  const slug = route.startsWith("#/") ? route.slice(2) : null;
+  const study = slug && caseStudies[slug];
+  return study ? <CaseStudy key={slug} study={study} /> : <Home />;
 }
 
 export default App;
